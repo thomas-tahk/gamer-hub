@@ -31,6 +31,8 @@ jobs:
         tags: ttahk/gamer-hub-frontend:latest
         cache-from: type=gha
         cache-to: type=gha,mode=max
+        build-args: |
+          NEXT_PUBLIC_API_URL=http://143.198.48.83:8080
     
     - name: Build and push backend image
       uses: docker/build-push-action@v5
