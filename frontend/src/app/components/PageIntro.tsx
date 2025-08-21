@@ -9,6 +9,9 @@ export function PageIntro() {
                 <div className="w-full absolute top-[15%] md:top-[22%] text-center md:text-left md:left-10 mt-10">
                     <h2 className={"font-normal text-white md:text-wasa-600 text-[1.75rem] md:text-[1.75rem] xl:text-[5.25rem]"}>Welcome to A Game Away</h2>
                     <h1 className={"font-normal md:text-white text-[1.25rem] md:text-[1.75rem] xl:text-[3rem]"}>Find your table, adventures await!</h1>
+                    <div className="mt-4 bg-yellow-500 bg-opacity-90 px-4 py-2 rounded-lg text-black text-sm md:text-base max-w-md">
+                        🚧 Currently under active development - some features may not be fully functional
+                    </div>
                 </div>
             </div>
 
