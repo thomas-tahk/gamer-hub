@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
         return [
             {
                 source: '/apis/:path*',
-                destination: `${process.env.REST_API_URL}/apis/:path*`
+                destination: `${process.env.REST_API_URL || process.env.PUBLIC_API_URL || 'http://localhost:8080'}/apis/:path*`
             }
         ]
     },

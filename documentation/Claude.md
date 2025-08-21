@@ -56,11 +56,37 @@ docker exec -i gamer-hub-sql-1 psql -U username -d project < sql/gamer-hub.sql
 2. Push to Docker Hub: `docker push ttahk/gamer-hub-[service]:latest`
 3. Deploy on droplet: `docker-compose pull && docker-compose up -d`
 
+### Manual Deployment Process (Current Working Method)
+Since automated CI/CD has issues, use this manual process:
+
+```bash
+# 1. Build and push images locally
+docker buildx build --platform linux/amd64 -t ttahk/gamer-hub-frontend:latest ./frontend --push
+docker buildx build --platform linux/amd64 -t ttahk/gamer-hub-backend:latest ./backend --push
+
+# 2. Update on droplet
+ssh root@143.198.48.83 "cd /opt/gamer-hub && docker-compose pull && docker-compose up -d"
+```
+
+### CI/CD Issues Encountered
+- **Next.js 15.2.4 Performance Regression**: Known issue with Docker builds taking 7+ minutes
+- **Environment Variable Issues**: `process.env.REST_API_URL` undefined during Docker build causing routing failures
+- **Fixed**: Added fallbacks in `next.config.ts` for undefined env vars
+- **GitHub Actions Failures**: Build process fails in containerized environment
+- **Docker Hub Authentication**: Requires periodic re-login (`docker logout && docker login`)
+
+### Security Lessons Learned
+- **CRITICAL**: Never commit actual API keys, passwords, or secrets to repository
+- **Use placeholders**: Always use `[placeholder]` format in documentation
+- **Environment files**: Keep `.env` files local only, ensure they're gitignored
+- **Docker images**: Use `.dockerignore` to prevent sensitive files from being baked into public images
+
 ### Known Issues & Future Refactoring
 - **Database seeding**: Currently takes ~2 hours via external API calls
 - **Security vulnerabilities**: Need to address npm audit findings
 - **Authentication**: Login/signup needs testing and potential fixes
 - **Game data**: Need to optimize the board game catalog loading process
+- **CI/CD Automation**: GitHub Actions workflow needs debugging or consider alternatives (CircleCI, ArgoCD)
 
 ---
 *Generated during setup session with Claude Code*
