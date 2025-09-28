@@ -66,7 +66,8 @@ export class App {
 
     // starts the server and tells the terminal to post a message that the server is running and on what port
     public async listen (): Promise<void> {
-        await this.app.listen(4200)
-        console.log('Express application built successfully')
+        const port = process.env.PORT || this.app.get('port') || 4200
+        await this.app.listen(port)
+        console.log(`Express application built successfully on port ${port}`)
     }
 }
