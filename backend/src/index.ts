@@ -15,6 +15,7 @@ declare module 'express-session' {
 }
 
 async function main (): Promise<void> {
+    console.log('Starting Gamer Hub backend...')
     if (redisClient === undefined) {
         redisClient = createClient({ socket: { host: process.env.REDIS_HOST } })
         redisClient.connect().catch(console.error)
